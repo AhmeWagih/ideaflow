@@ -1,12 +1,16 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState } from 'react';
+import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useUserContext } from '@/app/context/UserContext';
 
 export function Navbar() {
+  const { logout, user } = useUserContext();
+  const loggedIn = !!user;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -19,21 +23,30 @@ export function Navbar() {
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2">
-            <div className="text-primary">
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
               >
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z"
-                  fill="#7C3AED"
-                />
+                <g clipPath="url(#clip0_1_310)">
+                  <g clipPath="url(#clip1_1_310)">
+                    <path
+                      d="M8.625 0C10.0734 0 11.25 1.17656 11.25 2.625V21.375C11.25 22.8234 10.0734 24 8.625 24C7.27031 24 6.15469 22.9734 6.01406 21.6516C5.77031 21.7172 5.5125 21.75 5.25 21.75C3.59531 21.75 2.25 20.4047 2.25 18.75C2.25 18.4031 2.31094 18.0656 2.41875 17.7562C1.00312 17.2219 0 15.8531 0 14.25C0 12.7547 0.876562 11.4609 2.14687 10.8609C1.73906 10.35 1.5 9.70312 1.5 9C1.5 7.56094 2.5125 6.36094 3.8625 6.06562C3.7875 5.80781 3.75 5.53125 3.75 5.25C3.75 3.84844 4.71563 2.66719 6.01406 2.33906C6.15469 1.02656 7.27031 0 8.625 0ZM15.375 0C16.7297 0 17.8406 1.02656 17.9859 2.33906C19.2891 2.66719 20.25 3.84375 20.25 5.25C20.25 5.53125 20.2125 5.80781 20.1375 6.06562C21.4875 6.35625 22.5 7.56094 22.5 9C22.5 9.70312 22.2609 10.35 21.8531 10.8609C23.1234 11.4609 24 12.7547 24 14.25C24 15.8531 22.9969 17.2219 21.5812 17.7562C21.6891 18.0656 21.75 18.4031 21.75 18.75C21.75 20.4047 20.4047 21.75 18.75 21.75C18.4875 21.75 18.2297 21.7172 17.9859 21.6516C17.8453 22.9734 16.7297 24 15.375 24C13.9266 24 12.75 22.8234 12.75 21.375V2.625C12.75 1.17656 13.9266 0 15.375 0Z"
+                      fill="#7C3AED"
+                    />
+                  </g>
+                </g>
+                <defs>
+                  <clipPath id="clip0_1_310">
+                    <rect width="24" height="24" fill="white" />
+                  </clipPath>
+                  <clipPath id="clip1_1_310">
+                    <path d="M0 0H24V24H0V0Z" fill="white" />
+                  </clipPath>
+                </defs>
               </svg>
-            </div>
             <span className="text-xl font-bold">IdeaFlow</span>
           </Link>
         </div>
@@ -75,19 +88,30 @@ export function Navbar() {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex md:items-center md:space-x-4">
-          <Button variant="ghost" asChild>
-            <Link href="/signin">Sign In</Link>
-          </Button>
-          <Button asChild className="bg-purple-600 hover:bg-purple-700">
-            <Link href="/get-started">Get Started</Link>
-          </Button>
+          {loggedIn ? (
+            <>
+              <span className="text-gray-700">{user.name}</span>
+              <Button variant="ghost" onClick={logout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/sign-in">Sign In</Link>
+              </Button>
+              <Button asChild className="bg-purple-600 hover:bg-purple-700">
+                <Link href="/get-started">Get Started</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
         <button
           className="md:hidden"
           onClick={toggleMenu}
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
           {isMenuOpen ? (
             <X className="h-6 w-6" />
@@ -100,8 +124,8 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "absolute left-0 right-0 z-50 bg-white px-4 py-5 shadow-lg md:hidden",
-          isMenuOpen ? "block" : "hidden"
+          'absolute left-0 right-0 z-50 bg-white px-4 py-5 shadow-lg md:hidden',
+          isMenuOpen ? 'block' : 'hidden'
         )}
       >
         <nav className="flex flex-col space-y-4">
@@ -134,16 +158,27 @@ export function Navbar() {
             Pricing
           </Link>
           <div className="flex flex-col space-y-2 pt-4">
-            <Button variant="outline" asChild className="w-full">
-              <Link href="/signin" onClick={() => setIsMenuOpen(false)}>
-                Sign In
-              </Link>
-            </Button>
-            <Button asChild className="w-full">
-              <Link href="/get-started" onClick={() => setIsMenuOpen(false)}>
-                Get Started
-              </Link>
-            </Button>
+            {loggedIn ? (
+              <>
+                <span className="text-gray-700">{user.name}</span>
+                <Button variant="outline" onClick={logout} className="w-full">
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" asChild className="w-full">
+                  <Link href="/signin" onClick={() => setIsMenuOpen(false)}>
+                    Sign In
+                  </Link>
+                </Button>
+                <Button asChild className="w-full">
+                  <Link href="/get-started" onClick={() => setIsMenuOpen(false)}>
+                    Get Started
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
         </nav>
       </div>

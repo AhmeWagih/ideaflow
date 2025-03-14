@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+// import { Poppins } from "next/font/google";
 import "../globals.css";
 import { Navbar } from "@/components/shared/Navbar";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { Toaster } from "@/components/ui/sonner";
 
-const poppins = Poppins({
-  style: "normal",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+// const poppins = Poppins({
+//   style: "normal",
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,11 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased`}>
+      <body>
         <QueryProvider>
           <Navbar />
           {children}
         </QueryProvider>
+        <Toaster />
       </body>
     </html>
   );
