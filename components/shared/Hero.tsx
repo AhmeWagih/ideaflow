@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const Hero = () => {
   return (
     <div>
-      <div className="flex flex-col items-center gap-4 container pt-20">
+      <div className="flex flex-col items-center gap-4 pt-20">
         <h1 className="text-[60px] leading-[72px] font-bold text-center max-w-[1013px]">
-          Transform Your Ideas into{' '}
+          Transform Your Ideas into{" "}
           <span className="text-[#4F46E5]">Visual Mind Maps</span> with AI
         </h1>
         <p className="max-w-[670px] text-[20px] font-normal text-center text-[#4B5563]">
@@ -18,7 +18,7 @@ const Hero = () => {
             Start Creating Free
           </button>
           <button className="bg-white text-[#374151] flex items-center gap-2 px-4 py-2 rounded-md border border-[#D1D5DB] cursor-pointer">
-            <p>Watch Demo{' '}</p>
+            <p>Watch Demo </p>
             <svg
               width="15"
               height="19"
