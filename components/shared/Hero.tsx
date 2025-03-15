@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Hero = () => {
@@ -14,11 +15,13 @@ const Hero = () => {
           learning.
         </p>
         <div className="flex items-center gap-4">
-          <button className="bg-[#4F46E5] text-white px-4 py-2 rounded-md cursor-pointer">
-            Start Creating Free
-          </button>
+          <Link href="/generate">
+            <button className="bg-[#4F46E5] text-white px-4 py-2 rounded-md cursor-pointer">
+              Start Creating Free
+            </button>
+          </Link>
           <button className="bg-white text-[#374151] flex items-center gap-2 px-4 py-2 rounded-md border border-[#D1D5DB] cursor-pointer">
-            <p>Watch Demo{' '}</p>
+            <p>Watch Demo </p>
             <svg
               width="15"
               height="19"
