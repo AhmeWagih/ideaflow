@@ -12,14 +12,15 @@ export default function LoginTemplate() {
   const [rememberMe, setRememberMe] = useState(false);
   const { login }: any = useUserContext();
   const router = useRouter();
-
+  const user = localStorage.getItem("user");
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const success = await login(email, password);
-    if (success) {
-      router.push('/');
-    }
+    await login(email, password);
   };
+
+  if (user) {
+    router.push("/");
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
