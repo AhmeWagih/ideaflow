@@ -1,20 +1,18 @@
-'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useSignin } from '@/app/services/hooks/useSignin';
+import { useState } from "react";
+import Link from "next/link";
+import { useUserContext } from "@/app/context/UserContext";
 
 export default function LoginTemplate() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const { mutate: signInMutate } = useSignin({
-    email,
-    password,
-  });
+  const { login }: any = useUserContext();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    signInMutate();
+    login(email, password);
   };
 
   return (
@@ -168,7 +166,7 @@ export default function LoginTemplate() {
 
         <div className="flex justify-center pb-8">
           <p className="text-sm text-center">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-blue-600 hover:underline">
               Sign up for free
             </Link>

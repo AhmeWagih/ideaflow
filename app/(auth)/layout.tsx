@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "../globals.css";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { UserProvider } from "../context/UserContext";
 
 const poppins = Poppins({
   style: "normal",
@@ -23,9 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <QueryProvider>
-          {children}
-        </QueryProvider>
+        <UserProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </UserProvider>
         <Toaster />
       </body>
     </html>
