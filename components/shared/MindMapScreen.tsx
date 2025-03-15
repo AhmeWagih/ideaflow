@@ -11,9 +11,11 @@ import {
   useEdgesState,
   Edge,
   Node,
+  MiniMap,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useCallback, useEffect, useState } from "react";
+import ShareMindMap from "./ShareMindMap";
 
 function MindMapScreen() {
   const searchParams = useSearchParams();
@@ -157,8 +159,8 @@ function MindMapScreen() {
           animated: true,
           type: "smoothstep",
           style: {
-            stroke: edge.style.stroke,
-            strokeWidth: edge.style.strokeWidth,
+            stroke: edge.style?.stroke || "#94a3b8",
+            strokeWidth: edge.style?.strokeWidth || 2,
           },
           label: edge.label,
           markerEnd: { type: MarkerType.ArrowClosed, color: "#94a3b8" },
@@ -292,7 +294,9 @@ function MindMapScreen() {
       >
         <Background />
         <Controls />
+        <MiniMap />
       </ReactFlow>
+      <ShareMindMap />
     </div>
   );
 }
