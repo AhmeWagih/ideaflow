@@ -6,6 +6,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useUserContext } from '@/app/context/UserContext';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 export function Navbar() {
   const { logout, user } = useUserContext();
@@ -89,12 +90,28 @@ export function Navbar() {
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex md:items-center md:space-x-4">
           {loggedIn ? (
-            <>
-              <span className="text-gray-700">{user.name}</span>
-              <Button variant="ghost" onClick={logout}>
-                Logout
-              </Button>
-            </>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center space-x-2">
+                  <div className="flex items-center justify-center h-8 w-8 rounded-full bg-gray-500 text-white">
+                    {user.name.slice(0, 2).toUpperCase()}
+                  </div>
+                  <span className="text-gray-700">{user.name}</span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <button onClick={logout} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    Logout
+                  </button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <>
               <Button variant="ghost" asChild>

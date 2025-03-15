@@ -22,7 +22,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Login Error:", error);
-      toast("plaaaa");
+      toast("Error");
     } finally {
       setLoading(false);
     }
