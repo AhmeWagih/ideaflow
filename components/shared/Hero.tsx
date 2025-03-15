@@ -4,7 +4,7 @@ import React from 'react';
 const Hero = () => {
   return (
     <div>
-      <div className="flex flex-col items-center gap-4 pt-20">
+      <div className="flex flex-col items-center gap-4 pt-20 px-8">
         <h1 className="text-[60px] leading-[72px] font-bold text-center max-w-[1013px]">
           Transform Your Ideas into{" "}
           <span className="text-[#4F46E5]">Visual Mind Maps</span> with AI

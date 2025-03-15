@@ -20,7 +20,7 @@ export default function Features() {
   ]
 
   return (
-    <section className="px-8 w-full flex justify-center items-center py-10 bg-white">
+    <section className="w-full flex justify-center items-center py-10 bg-white px-8 lg:px-22">
       <div className=" flex flex-col gap-8">
         <div className="flex flex-col items-center justify-center gap-4 text-center">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
@@ -30,7 +30,7 @@ export default function Features() {
             Everything you need to organize your thoughts and ideas effectively
           </p>
         </div>
-        <div className="grid gap-8 sm:gap-12 md:grid-cols-3 lg:gap-16 container">
+        <div className="grid gap-6 md:grid-cols-3 ">
           {features.map((Feature, index) => (
             <div key={index} className="flex flex-col items-start gap-4 text-left border rounded-lg p-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#4F46E5]/10">
