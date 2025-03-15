@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useUserContext } from "@/app/context/UserContext";
 
 export default function LoginTemplate() {
@@ -10,9 +11,14 @@ export default function LoginTemplate() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const { login }: any = useUserContext();
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(email, password);
+    const success = await login(email, password);
+    if (success) {
+      router.push('/');
+    }
   };
 
   return (
