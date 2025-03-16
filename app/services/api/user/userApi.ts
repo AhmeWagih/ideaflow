@@ -17,3 +17,8 @@ export const Login = async ({ email, password }: TSignIn) => {
   });
   return data;
 };
+
+export const getUserDiagrams = async () => {
+  const { data } = await api.get('/Diagram/getUserDiagrams');
+  return data;
+};
