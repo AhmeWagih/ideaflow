@@ -98,6 +98,8 @@ function MindMapScreen() {
             type: "smoothstep",
             style: { stroke: "#94a3b8", strokeWidth: 2 },
             markerEnd: { type: MarkerType.ArrowClosed, color: "#94a3b8" },
+            labelBgStyle: { fill: "transparent" },
+            labelStyle: { fill: "#000" },
           },
         ]
       : [];
@@ -148,6 +150,7 @@ function MindMapScreen() {
               color: node.style.color,
               width: node.style.width,
               borderRadius: node.style.borderRadius,
+              labelStyle: { background: "transparent", fill: "white" },
             },
           })
         );
@@ -164,6 +167,8 @@ function MindMapScreen() {
           },
           label: edge.label,
           markerEnd: { type: MarkerType.ArrowClosed, color: "#94a3b8" },
+          labelBgStyle: { fill: "transparent" },
+          labelStyle: { fill: "#000" },
         }));
 
         setNodes(formattedNodes);

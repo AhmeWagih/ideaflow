@@ -1,26 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useResetPassword } from "@/app/services/hooks/useResetPassword";
 import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useUserContext } from "@/app/context/UserContext";
 
-export default function LoginTemplate() {
-  const [email, setEmail] = useState("");
+export default function VerifyOTP() {
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const { login }: any = useUserContext();
-  const router = useRouter();
-  const user = localStorage.getItem("user");
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await login(email, password);
-  };
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  if (user) {
-    router.push("/");
-  }
+  const searchParams = new URLSearchParams(window.location.search);
+  const email = searchParams.get("email") || "";
+  const { mutate: resetPassword, isPending } = useResetPassword({
+    password,
+    confirmPassword,
+    email,
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    resetPassword();
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
@@ -54,50 +52,19 @@ export default function LoginTemplate() {
             </defs>
           </svg>
 
-          <h1 className="text-xl font-semibold text-center">Welcome back</h1>
+          <h1 className="text-xl font-semibold text-center">
+            Ready to continue resetting your password?!
+          </h1>
           <p className="text-sm text-gray-500 text-center">
-            Please enter your details to sign in
+            Please enter your OTP
           </p>
         </div>
 
         <div className="p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                  </svg>
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium">
-                Password
+                New Password
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
@@ -124,60 +91,64 @@ export default function LoginTemplate() {
                   </svg>
                 </div>
                 <input
-                  id="password"
-                  name="password"
+                  id="otp"
+                  name="otp"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="Enter Your New Password"
                   className="w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
+            <div className="space-y-2">
+              <label htmlFor="confirmPassword" className="text-sm font-medium">
+                Confirm New Password
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect
+                      width="18"
+                      height="11"
+                      x="3"
+                      y="11"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                </div>
                 <input
-                  id="rememberMe"
-                  name="rememberMe"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
+                  id="otp"
+                  name="otp"
+                  type="password"
+                  placeholder="Confirm Your New Password"
+                  className="w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
-                <label
-                  htmlFor="rememberMe"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Remember me
-                </label>
-              </div>
-              <div className="text-sm">
-                <Link
-                  href="/forget-password"
-                  className="font-medium text-blue-600 hover:text-blue-500"
-                >
-                  Forget password?
-                </Link>
               </div>
             </div>
 
             <button
               type="submit"
               className="w-full rounded-md bg-[#7C3AED] py-2 text-white font-medium hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+              disabled={isPending}
             >
-              Sign in
+              Reset Password
             </button>
           </form>
-        </div>
-
-        <div className="flex justify-center pb-8">
-          <p className="text-sm text-center">
-            Don&apos;t have an account?{" "}
-            <Link href="/sign-up" className="text-blue-600 hover:underline">
-              Sign up for free
-            </Link>
-          </p>
         </div>
       </div>
     </div>
