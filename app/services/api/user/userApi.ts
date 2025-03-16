@@ -18,6 +18,11 @@ export const Login = async ({ email, password }: TSignIn) => {
   return data;
 };
 
+export const getUserDiagrams = async () => {
+  const { data } = await api.get('/Diagram/getUserDiagrams');
+  return data;
+};
+
 export const forgetPassword = async ({ email }: { email: string }) => {
   const { data } = await api.post("/Account/forgotPassword", { email });
   return data;
