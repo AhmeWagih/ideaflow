@@ -4,11 +4,17 @@ import { useMutation } from "@tanstack/react-query";
 import { generateResponse } from "../api/generate/generateApi";
 import { useRouter } from "next/navigation";
 
-export const useGenerate = (prompt: string) => {
+export const useGenerate = ({
+  prompt,
+  modelOption,
+}: {
+  prompt: string;
+  modelOption: number;
+}) => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: () => generateResponse(prompt),
+    mutationFn: () => generateResponse({ prompt, modelOption }),
     onSuccess: (data) => {
       console.log(data);
       const encodedData = encodeURIComponent(JSON.stringify(data.result));

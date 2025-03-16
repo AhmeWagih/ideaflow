@@ -1,9 +1,20 @@
 export type TSignUp = {
-  fullName:string;
-  email:string;
-  password:string;
-}
+  fullName: string;
+  email: string;
+  password: string;
+};
 export type TSignIn = {
-  email:string;
-  password:string;
-}
+  email: string;
+  password: string;
+};
+
+export type TAiModel = {
+  name: string;
+  value: number;
+};
+
+export type TSave_Mindmap = {
+  title: string;
+  contentjson: string;
+  isPublic: boolean;
+};

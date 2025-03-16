@@ -6,9 +6,13 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import GenerateResponseButton from "./GenerateResponseButton";
+import AiDropdown from "./AiDropdown";
+import { TAiModel } from "@/constants/types";
+import { AiModels } from "@/constants";
 
 export default function MindMapGenerator() {
   const [prompt, setPrompt] = useState("");
+  const [selectedModel, setSelectedModel] = useState<TAiModel>(AiModels[1]);
 
   return (
     <div className="w-full max-w-4xl">
@@ -30,10 +34,20 @@ export default function MindMapGenerator() {
               placeholder="Enter your prompt here..."
               className="min-h-[120px] mb-6 text-base focus-visible:ring-0"
               value={prompt}
-              onChange={(e) => setPrompt(e.target.value)} 
+              onChange={(e) => setPrompt(e.target.value)}
             />
-
-            <GenerateResponseButton prompt={prompt} />
+            <div className="flex flex-row gap-2">
+              <div className="flex-grow">
+                <GenerateResponseButton
+                  modelOption={selectedModel.value}
+                  prompt={prompt}
+                />
+              </div>
+              <AiDropdown
+                selectedModel={selectedModel}
+                onModelSelect={setSelectedModel}
+              />
+            </div>
           </form>
         </CardContent>
       </Card>

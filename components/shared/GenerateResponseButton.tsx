@@ -3,10 +3,17 @@ import { useGenerate } from "@/app/services/hooks/useGenerate";
 import { Zap } from "lucide-react";
 import React from "react";
 
-const GenerateResponseButton = ({ prompt }: { prompt: string }) => {
-  const { mutate: generateResponse, isPending: isGenerating } = useGenerate(
-    prompt as string
-  );
+const GenerateResponseButton = ({
+  prompt,
+  modelOption,
+}: {
+  prompt: string;
+  modelOption: number;
+}) => {
+  const { mutate: generateResponse, isPending: isGenerating } = useGenerate({
+    prompt,
+    modelOption,
+  });
 
   const handleGenerateResponse = (e: React.FormEvent) => {
     e.preventDefault();
