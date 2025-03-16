@@ -25,7 +25,7 @@ export function Navbar() {
 
   return (
     <header className="w-full border-b bg-white">
-      <div className="container mx-auto flex h-16 items-center justify-around px-4">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center gap-2">
@@ -104,7 +104,7 @@ export function Navbar() {
                   </div>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48">
+              <DropdownMenuContent className="w-32">
                 <DropdownMenuItem asChild className="cursor-pointer outline-none">
                   <Link
                     href="/profile"

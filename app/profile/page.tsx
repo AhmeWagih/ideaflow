@@ -1,9 +1,10 @@
-import React from 'react'
+import { redirect } from "next/navigation"
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+export default function DefaultProfilePage() {
+  // In a real app, you would get the user ID from authentication
+  const id = "user123" // Example user ID
+
+  // Redirect to the user's profile page
+  redirect(`/profile/${id}`)
 }
 
-export default page
