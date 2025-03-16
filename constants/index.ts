@@ -35,9 +35,11 @@ export const AiModels = [
   {
     name: "DeepSeek",
     value: 0,
+    iconPath: "/deepseek.svg",
   },
   {
     name: "Gemini",
     value: 1,
+    iconPath: "/gemini.svg",
   },
 ];

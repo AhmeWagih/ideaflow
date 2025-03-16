@@ -11,6 +11,7 @@ export type TSignIn = {
 export type TAiModel = {
   name: string;
   value: number;
+  iconPath: string;
 };
 
 export type TSave_Mindmap = {

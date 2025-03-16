@@ -7,7 +7,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AiModels } from "@/constants";
 import { TAiModel } from "@/constants/types";
-import { ChevronDownIcon, CopyPlusIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
+import Image from "next/image";
 
 interface AiDropdownProps {
   selectedModel: TAiModel;
@@ -37,11 +38,7 @@ export default function AiDropdown({
               key={model.name}
               onClick={() => onModelSelect(model)}
             >
-              <CopyPlusIcon
-                size={16}
-                className="opacity-60"
-                aria-hidden="true"
-              />
+              <Image width={16} height={16} alt="" src={model.iconPath} />
               {model.name}
             </DropdownMenuItem>
           );

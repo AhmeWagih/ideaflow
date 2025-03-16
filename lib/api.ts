@@ -6,7 +6,7 @@ let parsedToken = null;
 
 if (typeof window !== "undefined") {
   const user = localStorage.getItem("user");
-  parsedToken = user ? JSON.parse(user)?.accessToken : null;
+  parsedToken = user ? JSON.parse(user)?.token : null;
 }
 
 // const API_BASE_URL =
