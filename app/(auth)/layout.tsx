@@ -24,10 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
+        <Toaster />
         <UserProvider>
           <QueryProvider>{children}</QueryProvider>
         </UserProvider>
-        <Toaster />
       </body>
     </html>
   );
