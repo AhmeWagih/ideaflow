@@ -6,12 +6,13 @@ import Widget from "@/components/shared/Widget";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col justify-center items-center gap-10">
       <Hero />
       <Template />
-      <Features />
+      <div className="container">
+        <Features />
+      </div>
       <HowItWorks />
-      <Features />
       <Widget/>
     </div>
   );

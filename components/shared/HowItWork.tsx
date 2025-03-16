@@ -18,7 +18,7 @@ export default function HowItWorks() {
   ]
 
   return (
-    <section className="flex justify-center items-center py-20 bg-[#E5E7EB]">
+    <section className="flex justify-center items-center py-20 bg-[#E5E7EB] w-full">
       <div className="flex flex-col gap-8 px-8">
         <div className="flex flex-col gap-4 items-center justify-center text-center">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How It Works</h2>
