@@ -5,11 +5,11 @@ import Link from "next/link";
 import {
   getAllDiagrams,
   // getUserDiagrams,
-} from "@/app/services/api/diagram/diagramApi";
-import { TDiagram } from "@/constants/types";
-import { useQuery } from "@tanstack/react-query";
-import api from "@/lib/api";
-import { Background, ReactFlow, ReactFlowProvider } from "@xyflow/react";
+} from '@/app/services/api/diagram/diagramApi';
+import { TDiagram } from '@/constants/types';
+import { useQuery } from '@tanstack/react-query';
+import api from '@/lib/api';
+import { Background, ReactFlow, ReactFlowProvider } from '@xyflow/react';
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -23,23 +23,21 @@ const FlowPreview = ({ diagramId }: { diagramId: string }) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["diagramId", diagramId],
+    queryKey: ['diagramId', diagramId],
     queryFn: async () => {
       const { data } = await api.get(`/Diagram/getAllDiagram`);
-      // return typeof data.flowData === "string"
-      //   ? JSON.parse(data.flowData)
-      //   : data.flowData;
-      return data;
+      console.log(data);
+      return typeof data.flowData === 'string'
+        ? JSON.parse(data.flowData)
+        : data.flowData;
     },
   });
-
-  console.log(flowData);
 
   if (isLoading) return <div>Loading preview...</div>;
   if (error || !flowData) return <div>Error loading preview</div>;
 
   return (
-    <div style={{ height: "200px", width: "100%" }}>
+    <div style={{ height: '200px', width: '100%' }}>
       <ReactFlowProvider>
         <ReactFlow
           nodes={flowData.nodes ?? []}
@@ -61,8 +59,9 @@ const FlowPreview = ({ diagramId }: { diagramId: string }) => {
   );
 };
 
-const page = () => {
-  const allDiagrams = getAllDiagrams();
+
+const page = async () => {
+  const allDiagrams = await getAllDiagrams();
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
       <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
@@ -120,7 +119,7 @@ const page = () => {
             </div>
 
             <div className="relative h-40 bg-gray-100">
-              <FlowPreview diagramId={diagram.diagramID} />
+              <FlowPreview contentJson={diagram.contentJson} />
             </div>
             <div className="p-4 flex flex-col gap-2">
               <h3 className="font-medium text-lg">{diagram.title}</h3>
