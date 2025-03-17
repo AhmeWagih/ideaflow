@@ -11,12 +11,8 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: {
-    id: string;
-  };
 }) {
   return (
     <html lang="en">
@@ -25,8 +21,8 @@ export default function RootLayout({
           <QueryProvider>
             <Navbar />
             <div className="flex h-screen">
-              <div className="w-1/6 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F3FF]">
-                <Sidebar userId={params.id} />
+              <div className="md:w-[250px] w-[80px] shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] bg-[#F5F3FF]">
+                <Sidebar />
               </div>
               <div className="flex-1 p-6 bg-white">{children}</div>
             </div>

@@ -1,36 +1,23 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Globe, Lock, Users } from 'lucide-react';
+import { Globe, Lock } from 'lucide-react';
 import Link from 'next/link';
+import {
+  getAllDiagrams,
+  // getUserDiagrams,
+} from '@/app/services/api/diagram/diagramApi';
+import { TDiagram } from '@/constants/types';
 
-export default function Page() {
-  const diagrams = [
-    {
-      id: '1',
-      title: 'Educational-Platform',
-      lastEdited: '2h ago',
-      visibility: 'Public',
-      thumbnail: '/placeholder.svg?height=200&width=300',
-    },
-    {
-      id: '2',
-      title: 'E-commerce Database',
-      lastEdited: '1d ago',
-      visibility: 'Private',
-      thumbnail: '/placeholder.svg?height=200&width=300',
-    },
-    {
-      id: '3',
-      title: 'Social Media App',
-      lastEdited: '3d ago',
-      visibility: 'Team',
-      thumbnail: '/placeholder.svg?height=200&width=300',
-    },
-  ];
+
+const page = async () => {
+  // const diagrams = await getUserDiagrams();
+  const allDiagrams = await getAllDiagrams();
+  console.log(allDiagrams.result.items);
+  // console.log(diagrams.result.items);
 
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
         <h1 className="text-2xl font-semibold">Your Mind Map</h1>
         <Link href="/generate">
           <Button className="bg-purple-600 hover:bg-purple-700 cursor-pointer">
@@ -59,25 +46,29 @@ export default function Page() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {diagrams.map((diagram) => (
-          <div key={diagram.id} className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
+        {allDiagrams.result.items.map((diagram: TDiagram, index: number) => (
+          <div
+            key={index}
+            className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
+          >
             <div className="relative h-40 bg-gray-100">
               <Image
                 src={diagram.thumbnail || '/placeholder.svg'}
                 alt={diagram.title}
-                fill
+                layout="fill"
                 className="object-cover"
               />
             </div>
-            <div className="p-4">
+            <div className="p-4 flex flex-col gap-2">
               <h3 className="font-medium text-lg">{diagram.title}</h3>
-              <div className="flex justify-between items-center mt-2 text-sm text-gray-500">
-                <span>Last edited {diagram.lastEdited}</span>
-                <div className="flex items-center">
-                  {diagram.visibility === 'Public' && <Globe className="h-4 w-4" />}
-                  {diagram.visibility === 'Private' && <Lock className="h-4 w-4" />}
-                  {diagram.visibility === 'Team' && <Users className="h-4 w-4" />}
-                  <span className="ml-1">{diagram.visibility}</span>
+              <div className="flex justify-between items-center text-sm text-gray-500">
+                <span>
+                  Last edited {new Date(diagram.updatedAt).toLocaleDateString()}
+                </span>
+                <div className="flex items-center flex-col md:flex-row gap-2">
+                  {diagram.isPublic === true && <Globe className="h-4 w-4" />}
+                  {diagram.isPublic === false && <Lock className="h-4 w-4" />}
+                  <span>{diagram.isPublic ? 'Public' : 'Private'}</span>
                 </div>
               </div>
             </div>
@@ -86,4 +77,6 @@ export default function Page() {
       </div>
     </div>
   );
-}
+};
+
+export default page;

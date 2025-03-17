@@ -16,7 +16,6 @@ import {
 export function Navbar() {
   const { logout, user } = useUserContext();
   const loggedIn = !!user;
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -107,7 +106,7 @@ export function Navbar() {
               <DropdownMenuContent className="w-32">
                 <DropdownMenuItem asChild className="cursor-pointer outline-none">
                   <Link
-                    href="/profile"
+                    href={`/profile/${user.userID}/diagrams`}
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   >
                     Profile

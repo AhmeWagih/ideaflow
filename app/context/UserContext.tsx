@@ -6,7 +6,26 @@ import { createContext, useContext, useState, useEffect } from "react";
 import api from "@/lib/api";
 import { toast } from "sonner";
 
-const UserContext = createContext({});
+interface User {
+  email: string;
+  userID: string;
+  name?: string;
+}
+
+interface UserContextType {
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  loading: boolean;
+}
+
+const UserContext = createContext<UserContextType>({
+  user: null,
+  login: async () => {},
+  logout: async () => {},
+  loading: false,
+});
+
 const useUserContext = () => useContext(UserContext);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {

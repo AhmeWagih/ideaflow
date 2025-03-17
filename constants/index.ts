@@ -1,45 +1,43 @@
-"use client";
-import { BookOpen, FolderPlus, Share2, Star, Grid } from "lucide-react";
+'use client';
+import { BookOpen, FolderPlus, Share2, Star, Grid } from 'lucide-react';
 
-export const SideBarItems = (userId: string) => [
+export const SideBarItems = (userID: string) => [
   {
-    title: "My diagrams",
-    href: userId ? `/profile/${userId}/my-diagrams` : "/profile/my-diagrams",
+    title: 'My diagrams',
+    href: `/profile/${userID}/diagrams`,
     icon: BookOpen,
   },
   {
-    title: "Shared with me",
-    href: userId ? `/profile/${userId}/shared` : "/profile/shared",
+    title: 'Shared with me',
+    href: `/profile/${userID}/shared`,
     icon: Share2,
   },
   {
-    title: "Create new folder",
-    href: userId
-      ? `/profile/${userId}/create-folder`
-      : "/profile/create-folder",
+    title: 'Create new folder',
+    href: `/profile/${userID}/create-folder`,
     icon: FolderPlus,
   },
   {
-    title: "My favorites",
-    href: userId ? `/profile/${userId}/favorites` : "/profile/favorites",
+    title: 'My favorites',
+    href: `/profile/${userID}/favorites`,
     icon: Star,
   },
   {
-    title: "Browse templates",
-    href: userId ? `/profile/${userId}/templates` : "/profile/templates",
+    title: 'Browse templates',
+    href: `/profile/${userID}/templates`,
     icon: Grid,
   },
 ];
 
 export const AiModels = [
   {
-    name: "DeepSeek",
+    name: 'DeepSeek',
     value: 0,
-    iconPath: "/deepseek.svg",
+    iconPath: '/deepseek.svg',
   },
   {
-    name: "Gemini",
+    name: 'Gemini',
     value: 1,
-    iconPath: "/gemini.svg",
+    iconPath: '/gemini.svg',
   },
 ];

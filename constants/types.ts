@@ -19,3 +19,10 @@ export type TSave_Mindmap = {
   contentjson: string;
   isPublic: boolean;
 };
+
+export type TDiagram = {
+  title: string;
+  thumbnail?: string;
+  updatedAt: string;
+  isPublic: boolean;
+}
