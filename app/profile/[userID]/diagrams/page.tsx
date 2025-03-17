@@ -15,7 +15,8 @@ const FlowPreview = ({ diagramId }: { diagramId: string }) => {
   const { data: flowData, isLoading, error } = useQuery({
     queryKey: ['diagramId', diagramId],
     queryFn: async () => {
-      const { data } = await api.get(`/Diagram/getDiagram/${diagramId}`);
+      const { data } = await api.get(`/Diagram/getAllDiagram`);
+      console.log(data);
       return typeof data.flowData === 'string' ? JSON.parse(data.flowData) : data.flowData;
     },
   });
