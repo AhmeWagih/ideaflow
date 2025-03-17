@@ -1,21 +1,21 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import { Ellipsis, Globe, Lock } from 'lucide-react';
-import Link from 'next/link';
+"use client";
+import { Button } from "@/components/ui/button";
+import { Ellipsis, Globe, Lock } from "lucide-react";
+import Link from "next/link";
 import {
   getAllDiagrams,
   // getUserDiagrams,
-} from '@/app/services/api/diagram/diagramApi';
-import { TDiagram } from '@/constants/types';
-import { useQuery } from '@tanstack/react-query';
-import api from '@/lib/api';
-import { Background, ReactFlow, ReactFlowProvider } from '@xyflow/react';
+} from "@/app/services/api/diagram/diagramApi";
+import { TDiagram } from "@/constants/types";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/lib/api";
+import { Background, ReactFlow, ReactFlowProvider } from "@xyflow/react";
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
 const FlowPreview = ({ diagramId }: { diagramId: string }) => {
   const {
@@ -23,21 +23,23 @@ const FlowPreview = ({ diagramId }: { diagramId: string }) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['diagramId', diagramId],
+    queryKey: ["diagramId", diagramId],
     queryFn: async () => {
       const { data } = await api.get(`/Diagram/getAllDiagram`);
-      console.log(data);
-      return typeof data.flowData === 'string'
-        ? JSON.parse(data.flowData)
-        : data.flowData;
+      // return typeof data.flowData === "string"
+      //   ? JSON.parse(data.flowData)
+      //   : data.flowData;
+      return data;
     },
   });
+
+  console.log(flowData);
 
   if (isLoading) return <div>Loading preview...</div>;
   if (error || !flowData) return <div>Error loading preview</div>;
 
   return (
-    <div style={{ height: '200px', width: '100%' }}>
+    <div style={{ height: "200px", width: "100%" }}>
       <ReactFlowProvider>
         <ReactFlow
           nodes={flowData.nodes ?? []}
@@ -59,8 +61,8 @@ const FlowPreview = ({ diagramId }: { diagramId: string }) => {
   );
 };
 
-const page = async () => {
-  const allDiagrams = await getAllDiagrams();
+const page = () => {
+  const allDiagrams = getAllDiagrams();
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
       <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
@@ -92,9 +94,9 @@ const page = async () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {allDiagrams.result.items.map((diagram: TDiagram, index: number) => (
+        {allDiagrams.result.items.map((diagram: TDiagram) => (
           <div
-            key={index}
+            key={diagram.diagramID}
             className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow relative"
           >
             <div className="absolute top-2 right-3 z-50">
@@ -107,7 +109,10 @@ const page = async () => {
                     />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-white shadow-lg rounded-md p-2">
+                <DropdownMenuContent
+                  align="end"
+                  className="bg-white shadow-lg rounded-md p-2"
+                >
                   <DropdownMenuItem>Edit</DropdownMenuItem>
                   <DropdownMenuItem>Delete</DropdownMenuItem>
                 </DropdownMenuContent>
@@ -122,14 +127,14 @@ const page = async () => {
               <div className="flex justify-between text-sm text-gray-500">
                 <div className="flex flex-col gap-2">
                   <span>
-                    Last edited{' '}
+                    Last edited{" "}
                     {new Date(diagram.updatedAt).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex items-end flex-col md:flex-row gap-2">
                   {diagram.isPublic === true && <Globe className="h-4 w-4" />}
                   {diagram.isPublic === false && <Lock className="h-4 w-4" />}
-                  <span>{diagram.isPublic ? 'Public' : 'Private'}</span>
+                  <span>{diagram.isPublic ? "Public" : "Private"}</span>
                 </div>
               </div>
             </div>

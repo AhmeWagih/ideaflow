@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { Globe, Lock, Search } from 'lucide-react';
+import { Globe, Lock, Search } from "lucide-react";
 import {
   getPublicDiagrams,
   getDiagramByTitle,
-} from '@/app/services/api/diagram/diagramApi';
-import { TDiagram } from '@/constants/types';
-import { useState, useEffect } from 'react';
+} from "@/app/services/api/diagram/diagramApi";
+import { TDiagram } from "@/constants/types";
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const Page = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [diagrams, setDiagrams] = useState<TDiagram[]>([]);
   const [publicDiagrams, setPublicDiagrams] = useState<TDiagram[]>([]);
 
@@ -24,7 +25,7 @@ const Page = () => {
 
   useEffect(() => {
     const fetchDiagramsByTitle = async () => {
-      if (search.trim() !== '') {
+      if (search.trim() !== "") {
         const data = await getDiagramByTitle(search);
         setDiagrams(data.result.items);
       } else {
@@ -88,19 +89,24 @@ const Page = () => {
                 {/* <FlowPreview diagramId={diagram.diagramID} /> */}
               </div>
               <div className="p-4 flex flex-col gap-2">
-                <h3 className="font-medium text-lg">{diagram.title}</h3>
+                <Link
+                  className="hover:underline"
+                  href={`/community/${diagram.diagramID}`}
+                >
+                  <h3 className="font-medium text-lg">{diagram.title}</h3>
+                </Link>
                 <div className="flex justify-between text-sm text-gray-500">
                   <div className="flex flex-col gap-2">
                     <p>{diagram.fullName}</p>
                     <span>
-                      Last edited{' '}
+                      Last edited{" "}
                       {new Date(diagram.updatedAt).toLocaleDateString()}
                     </span>
                   </div>
                   <div className="flex items-end flex-col md:flex-row gap-2">
                     {diagram.isPublic === true && <Globe className="h-4 w-4" />}
                     {diagram.isPublic === false && <Lock className="h-4 w-4" />}
-                    <span>{diagram.isPublic ? 'Public' : 'Private'}</span>
+                    <span>{diagram.isPublic ? "Public" : "Private"}</span>
                   </div>
                 </div>
               </div>

@@ -30,3 +30,8 @@ export const getDiagramByTitle = async (title: string) => {
   const { data } = await api.get(`/Diagram/getDiagrams/${title}`);
   return data;
 };
+
+export const getDiagramById = async ({ id }: { id: string }) => {
+  const { data } = await api.get(`/Diagram/getDiagram/${id}`);
+  return data;
+};
