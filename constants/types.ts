@@ -27,4 +27,5 @@ export type TDiagram = {
   isPublic: boolean;
   diagramID: string;
   fullName: string;
+  contentJson: string;
 };
