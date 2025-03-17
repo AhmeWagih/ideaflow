@@ -21,7 +21,7 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import PublicCheckbox from "./PublicCheckbox";
-import SaveMindmapButton from "./SaveMindmapButton";
+import { useSaveMindMap } from "@/app/services/hooks/Mindmap/useMindMap";
 
 const ShareMindMap = () => {
   const [title, setTitle] = useState<string>("");
@@ -59,6 +59,20 @@ const ShareMindMap = () => {
         console.error("Error exporting image:", error);
         toast("There was an error exporting your mind map");
       });
+  };
+
+  const { mutate: saveMindmap } = useSaveMindMap({
+    title,
+    contentjson: conentjson,
+    isPublic,
+  });
+
+  const handleSave = () => {
+    saveMindmap(undefined, {
+      onSuccess: () => {
+        setIsDialogOpen(false);
+      },
+    });
   };
 
   return (
@@ -106,11 +120,10 @@ const ShareMindMap = () => {
             <PublicCheckbox isPublic={isPublic} onToggle={setIsPublic} />
           </div>
           <DialogFooter>
-            <SaveMindmapButton
-              contentjson={conentjson}
-              title={title}
-              isPublic={isPublic}
-            />
+            <Button onClick={handleSave}>
+              <Save className="mr-2 h-4 w-4" />
+              Save Mindmap
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

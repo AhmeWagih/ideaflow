@@ -1,4 +1,4 @@
-import Image from 'next/image';
+'use client'
 import { Button } from '@/components/ui/button';
 import { Globe, Lock } from 'lucide-react';
 import Link from 'next/link';
@@ -7,12 +7,49 @@ import {
   // getUserDiagrams,
 } from '@/app/services/api/diagram/diagramApi';
 import { TDiagram } from '@/constants/types';
+import { useQuery } from '@tanstack/react-query';
+import api from '@/lib/api';
+import { Background, ReactFlow, ReactFlowProvider } from '@xyflow/react';
 
+const FlowPreview = ({ diagramId }: { diagramId: string }) => {
+  const { data: flowData, isLoading, error } = useQuery({
+    queryKey: ['diagramId', diagramId],
+    queryFn: async () => {
+      const { data } = await api.get(`/Diagram/getDiagram/${diagramId}`);
+      return typeof data.flowData === 'string' ? JSON.parse(data.flowData) : data.flowData;
+    },
+  });
+
+  if (isLoading) return <div>Loading preview...</div>;
+  if (error || !flowData) return <div>Error loading preview</div>;
+
+  return (
+    <div style={{ height: '200px', width: '100%' }}>
+      <ReactFlowProvider>
+        <ReactFlow
+          nodes={flowData.nodes ?? []}
+          edges={flowData.edges ?? []}
+          fitView
+          fitViewOptions={{ padding: 0.2 }}
+          nodesDraggable={false}
+          nodesConnectable={false}
+          elementsSelectable={false}
+          zoomOnScroll={false}
+          panOnScroll={false}
+          preventScrolling={false}
+          defaultViewport={flowData.viewport ?? { x: 0, y: 0, zoom: 1 }}
+        >
+          <Background />
+        </ReactFlow>
+      </ReactFlowProvider>
+    </div>
+  );
+};
 
 const page = async () => {
   // const diagrams = await getUserDiagrams();
   const allDiagrams = await getAllDiagrams();
-  console.log(allDiagrams.result.items);
+  // console.log(allDiagrams.result.items);
   // console.log(diagrams.result.items);
 
   return (
@@ -52,12 +89,7 @@ const page = async () => {
             className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="relative h-40 bg-gray-100">
-              <Image
-                src={diagram.thumbnail || '/placeholder.svg'}
-                alt={diagram.title}
-                layout="fill"
-                className="object-cover"
-              />
+              <FlowPreview diagramId={diagram.diagramID} />
             </div>
             <div className="p-4 flex flex-col gap-2">
               <h3 className="font-medium text-lg">{diagram.title}</h3>

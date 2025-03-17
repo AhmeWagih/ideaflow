@@ -25,4 +25,5 @@ export type TDiagram = {
   thumbnail?: string;
   updatedAt: string;
   isPublic: boolean;
-}
+  diagramID: string;
+};
