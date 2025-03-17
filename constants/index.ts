@@ -1,5 +1,5 @@
 'use client';
-import { BookOpen, FolderPlus, Share2, Star, Grid } from 'lucide-react';
+import { BookOpen, Star, Grid } from 'lucide-react';
 
 export const SideBarItems = (userID: string) => [
   {
@@ -8,23 +8,13 @@ export const SideBarItems = (userID: string) => [
     icon: BookOpen,
   },
   {
-    title: 'Shared with me',
-    href: `/profile/${userID}/shared`,
-    icon: Share2,
-  },
-  {
-    title: 'Create new folder',
-    href: `/profile/${userID}/create-folder`,
-    icon: FolderPlus,
-  },
-  {
     title: 'My favorites',
     href: `/profile/${userID}/favorites`,
     icon: Star,
   },
   {
     title: 'Browse templates',
-    href: `/profile/${userID}/templates`,
+    href: `/community`,
     icon: Grid,
   },
 ];

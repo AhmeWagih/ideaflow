@@ -1,6 +1,6 @@
-'use client'
+'use client';
 import { Button } from '@/components/ui/button';
-import { Globe, Lock } from 'lucide-react';
+import { Ellipsis, Globe, Lock } from 'lucide-react';
 import Link from 'next/link';
 import {
   getAllDiagrams,
@@ -10,14 +10,26 @@ import { TDiagram } from '@/constants/types';
 import { useQuery } from '@tanstack/react-query';
 import api from '@/lib/api';
 import { Background, ReactFlow, ReactFlowProvider } from '@xyflow/react';
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const FlowPreview = ({ diagramId }: { diagramId: string }) => {
-  const { data: flowData, isLoading, error } = useQuery({
+  const {
+    data: flowData,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['diagramId', diagramId],
     queryFn: async () => {
       const { data } = await api.get(`/Diagram/getAllDiagram`);
       console.log(data);
-      return typeof data.flowData === 'string' ? JSON.parse(data.flowData) : data.flowData;
+      return typeof data.flowData === 'string'
+        ? JSON.parse(data.flowData)
+        : data.flowData;
     },
   });
 
@@ -48,15 +60,11 @@ const FlowPreview = ({ diagramId }: { diagramId: string }) => {
 };
 
 const page = async () => {
-  // const diagrams = await getUserDiagrams();
   const allDiagrams = await getAllDiagrams();
-  // console.log(allDiagrams.result.items);
-  // console.log(diagrams.result.items);
-
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
       <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
-        <h1 className="text-2xl font-semibold">Your Mind Map</h1>
+        <h1 className="text-2xl font-semibold">My Diagrams</h1>
         <Link href="/generate">
           <Button className="bg-purple-600 hover:bg-purple-700 cursor-pointer">
             <span className="mr-1">+</span> Generate New
@@ -87,18 +95,38 @@ const page = async () => {
         {allDiagrams.result.items.map((diagram: TDiagram, index: number) => (
           <div
             key={index}
-            className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
+            className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow relative"
           >
+            <div className="absolute top-2 right-3 z-50">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button>
+                    <Ellipsis
+                      size={24}
+                      className=" text-[#4F46E5] cursor-pointer bg-[#4F46E5]/20 rounded-full p-1"
+                    />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-white shadow-lg rounded-md p-2">
+                  <DropdownMenuItem>Edit</DropdownMenuItem>
+                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
             <div className="relative h-40 bg-gray-100">
               <FlowPreview diagramId={diagram.diagramID} />
             </div>
             <div className="p-4 flex flex-col gap-2">
               <h3 className="font-medium text-lg">{diagram.title}</h3>
-              <div className="flex justify-between items-center text-sm text-gray-500">
-                <span>
-                  Last edited {new Date(diagram.updatedAt).toLocaleDateString()}
-                </span>
-                <div className="flex items-center flex-col md:flex-row gap-2">
+              <div className="flex justify-between text-sm text-gray-500">
+                <div className="flex flex-col gap-2">
+                  <span>
+                    Last edited{' '}
+                    {new Date(diagram.updatedAt).toLocaleDateString()}
+                  </span>
+                </div>
+                <div className="flex items-end flex-col md:flex-row gap-2">
                   {diagram.isPublic === true && <Globe className="h-4 w-4" />}
                   {diagram.isPublic === false && <Lock className="h-4 w-4" />}
                   <span>{diagram.isPublic ? 'Public' : 'Private'}</span>

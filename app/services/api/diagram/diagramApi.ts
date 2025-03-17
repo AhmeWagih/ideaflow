@@ -21,3 +21,12 @@ export const getAllDiagrams = async () => {
   return data;
 };
 
+export const getPublicDiagrams = async () => {
+  const { data } = await api.get("/Diagram/getPublicDiagrams");
+  return data;
+};
+
+export const getDiagramByTitle = async (title: string) => {
+  const { data } = await api.get(`/Diagram/getDiagrams/${title}`);
+  return data;
+};
