@@ -91,7 +91,7 @@ const Page = () => {
               <div className="p-4 flex flex-col gap-2">
                 <Link
                   className="hover:underline"
-                  href={`/community/${diagram.diagramID}`}
+                  href={`/templates/${diagram.diagramID}`}
                 >
                   <h3 className="font-medium text-lg">{diagram.title}</h3>
                 </Link>
