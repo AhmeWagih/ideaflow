@@ -17,7 +17,7 @@ const FlowPreview = ({ contentJson }: { contentJson: string }) => {
     },
   });
 
-  console.log(flowData);
+  // console.log(flowData);
 
   if (isLoading) return <div>Loading preview...</div>;
   if (error || !flowData) return <div>Error loading preview</div>;
@@ -38,6 +38,7 @@ const FlowPreview = ({ contentJson }: { contentJson: string }) => {
           preventScrolling={false}
           defaultViewport={flowData.viewport ?? { x: 0, y: 0, zoom: 1 }}
         >
+          {/* <Controls/> */}
           <Background />
         </ReactFlow>
       </ReactFlowProvider>

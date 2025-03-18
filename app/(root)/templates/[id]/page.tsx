@@ -2,7 +2,7 @@
 
 import { useGetDiagramById } from "@/app/services/hooks/Diagram/useDiagram";
 import DiagramFlow from "@/components/shared/CommunityMindmapFlow";
-import StarDiagramButton from "@/components/shared/StarDiagramButton";
+// import StarDiagramButton from "@/components/shared/StarDiagramButton";
 import { TDiagram } from "@/constants/types";
 import { useParams } from "next/navigation";
 
@@ -31,7 +31,7 @@ const DiagramPage = () => {
         </div>
         <div>
           {/* Button to star the diagram */}
-          <StarDiagramButton />
+          {/* <StarDiagramButton /> */}
         </div>
       </div>
       <hr className="mt-10" />

@@ -120,7 +120,7 @@ const ShareMindMap = () => {
             <PublicCheckbox isPublic={isPublic} onToggle={setIsPublic} />
           </div>
           <DialogFooter>
-            <Button onClick={handleSave}>
+            <Button onClick={handleSave} className="cursor-pointer">
               <Save className="mr-2 h-4 w-4" />
               Save Mindmap
             </Button>

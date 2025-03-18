@@ -3,6 +3,7 @@ import QueryProvider from '@/components/providers/QueryProvider';
 import '../globals.css';
 import { UserProvider } from '@/app/context/UserContext';
 import { Navbar } from '@/components/shared/Navbar';
+import { Toaster } from 'sonner';
 
 export const metadata = {
   title: 'Profile',
@@ -28,6 +29,7 @@ export default function RootLayout({
             </div>
           </QueryProvider>
         </UserProvider>
+        <Toaster />
       </body>
     </html>
   );

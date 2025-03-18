@@ -91,7 +91,7 @@ const Page = () => {
               </div>
               <div className="p-4 flex flex-col gap-2">
                 <Link
-                  className="hover:underline"
+                  className=""
                   href={`/templates/${diagram.diagramID}`}
                 >
                   <h3 className="font-medium text-lg">{diagram.title}</h3>
@@ -115,7 +115,7 @@ const Page = () => {
           ))
         ) : (
           <div className="text-center text-gray-500 col-span-full">
-            No results found
+            No Mind Maps found
           </div>
         )}
       </div>

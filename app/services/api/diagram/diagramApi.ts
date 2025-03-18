@@ -5,17 +5,6 @@ export const getUserDiagrams = async (userID: string) => {
   return data;
 };
 
-// export const getUserDiagrams = async () => {
-//   const token = localStorage.getItem("token");
-//   console.log(token);
-//   const { data } = await api.get("/Diagram/getUserDiagrams", {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-//   return data;
-// };
-
 export const getAllDiagrams = async () => {
   const { data } = await api.get("/Diagram/getAllDiagrams");
   return data;
@@ -35,3 +24,9 @@ export const getDiagramById = async ({ id }: { id: string }) => {
   const { data } = await api.get(`/Diagram/getDiagram/${id}`);
   return data;
 };
+
+export const deleteDiagram = async (diagramID: string) => {
+  const { data } = await api.delete(`/Diagram/deleteDiagram/${diagramID}`);
+  return data;
+};
+
