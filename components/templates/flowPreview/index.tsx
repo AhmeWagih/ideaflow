@@ -1,29 +1,29 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import api from '@/lib/api';
+// import api from '@/lib/api';
 import { Background, ReactFlow, ReactFlowProvider } from '@xyflow/react';
 
-const FlowPreview = ({ diagramId }: { diagramId: string }) => {
+const FlowPreview = ({ contentJson }: { contentJson: string }) => {
   const {
     data: flowData,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['diagramId', diagramId],
+    queryKey: ['contentJson', contentJson],
     queryFn: async () => {
-      const { data } = await api.get(`/Diagram/getAllDiagram`);
-      console.log(data);
-      return typeof data.flowData === 'string'
-        ? JSON.parse(data.flowData)
-        : data.flowData;
+      return typeof contentJson === 'string'
+        ? JSON.parse(contentJson)
+        : contentJson;
     },
   });
+
+  console.log(flowData);
 
   if (isLoading) return <div>Loading preview...</div>;
   if (error || !flowData) return <div>Error loading preview</div>;
 
   return (
-    <div style={{ height: '200px', width: '100%' }}>
+    <div style={{ height: '160px', width: '100%' }}>
       <ReactFlowProvider>
         <ReactFlow
           nodes={flowData.nodes ?? []}

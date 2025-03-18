@@ -1,7 +1,7 @@
 import api from "@/lib/api";
 
-export const getUserDiagrams = async () => {
-  const { data } = await api.get("/Diagram/getUserDiagrams");
+export const getUserDiagrams = async (userID: string) => {
+  const { data } = await api.get(`/Diagram/getUserDiagrams/${userID}`);
   return data;
 };
 

@@ -8,6 +8,7 @@ import {
 import { TDiagram } from "@/constants/types";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import FlowPreview from "@/components/templates/flowPreview";
 
 const Page = () => {
   const [search, setSearch] = useState("");
@@ -86,7 +87,7 @@ const Page = () => {
               className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shado w-full"
             >
               <div className="relative h-40 bg-gray-100">
-                {/* <FlowPreview diagramId={diagram.diagramID} /> */}
+                {diagram.contentJson && <FlowPreview contentJson={diagram.contentJson} />}
               </div>
               <div className="p-4 flex flex-col gap-2">
                 <Link

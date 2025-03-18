@@ -28,5 +28,5 @@ export type TDiagram = {
   fullName: string;
   isInFavourite?: boolean;
   description?: string;
-  contnetJson?: string;
+  contentJson?: string;
 };

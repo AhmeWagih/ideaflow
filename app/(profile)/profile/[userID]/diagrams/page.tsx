@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Ellipsis, Globe, Lock } from "lucide-react";
 import Link from "next/link";
 import {
-  getAllDiagrams,
-  // getUserDiagrams,
+  // getAllDiagrams,
+  getUserDiagrams,
 } from '@/app/services/api/diagram/diagramApi';
 import { TDiagram } from '@/constants/types';
 
@@ -15,10 +15,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import FlowPreview from "@/components/templates/flowPreview";
 
-const page = async () => {
-  const allDiagrams = await getAllDiagrams();
-  // const userDiagrams = await getUserDiagrams();
-  // console.log(userDiagrams);
+const page = async ({ params }: { params: { userID: string } }) => {
+  // const allDiagrams = await getAllDiagrams();
+  const userDiagrams = await getUserDiagrams(params.userID);
+  console.log(userDiagrams);
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
       <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
@@ -50,7 +50,7 @@ const page = async () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {allDiagrams.result.items.map((diagram: TDiagram) => (
+        {userDiagrams.result.items.map((diagram: TDiagram) => (
           <div
             key={diagram.diagramID}
             className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow relative"
@@ -76,7 +76,7 @@ const page = async () => {
             </div>
 
             <div className="relative h-40 bg-gray-100">
-              <FlowPreview diagramId={diagram.diagramID} />
+              {diagram.contentJson && <FlowPreview contentJson={diagram.contentJson} />}
             </div>
             <div className="p-4 flex flex-col gap-2">
               <h3 className="font-medium text-lg">{diagram.title}</h3>
