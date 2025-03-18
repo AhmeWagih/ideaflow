@@ -22,12 +22,11 @@ export type TSave_Mindmap = {
 
 export type TDiagram = {
   title: string;
-  thumbnail?: string;
   updatedAt: string;
   isPublic: boolean;
   diagramID: string;
   fullName: string;
   isInFavourite?: boolean;
   description?: string;
-  contnetJson: string;
+  contnetJson?: string;
 };

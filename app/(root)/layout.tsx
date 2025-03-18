@@ -5,7 +5,7 @@ import { Navbar } from "@/components/shared/Navbar";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "../context/UserContext";
-import Footer from "@/components/shared/Footer";
+// import Footer from "@/components/shared/Footer";
 const poppins = Poppins({
   style: "normal",
   subsets: ["latin"],

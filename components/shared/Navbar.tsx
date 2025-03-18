@@ -98,7 +98,7 @@ export function Navbar() {
               {/* <span className="text-gray-700">{user.email?.slice(0, 5)}</span> */}
               <DropdownMenuTrigger asChild className="cursor-pointer outline-none">
                 <button className="flex items-center gap-4">
-                  <div className="flex items-center justify-center h-8 w-8 rounded-full bg-gray-500 text-white">
+                  <div className="flex items-center justify-center h-8 w-8 rounded-full bg-[#4F46E5]/20 text-[#4F46E5]">
                     {user.email?.slice(0, 2).toUpperCase()}
                   </div>
                 </button>
@@ -106,7 +106,7 @@ export function Navbar() {
               <DropdownMenuContent className="w-32">
                 <DropdownMenuItem asChild className="cursor-pointer outline-none">
                   <Link
-                    href={`/profile/${user.userID}/diagrams`}
+                    href={`/profile/${user?.userID}/diagrams`}
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                   >
                     Profile

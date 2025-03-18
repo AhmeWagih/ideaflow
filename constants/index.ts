@@ -14,7 +14,7 @@ export const SideBarItems = (userID: string) => [
   },
   {
     title: 'Browse templates',
-    href: `/community`,
+    href: `/templates`,
     icon: Grid,
   },
 ];

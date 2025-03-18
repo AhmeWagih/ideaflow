@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { Ellipsis, Globe, Lock } from "lucide-react";
 import Link from "next/link";
@@ -7,61 +6,19 @@ import {
   // getUserDiagrams,
 } from '@/app/services/api/diagram/diagramApi';
 import { TDiagram } from '@/constants/types';
-import { useQuery } from '@tanstack/react-query';
-import api from '@/lib/api';
-import { Background, ReactFlow, ReactFlowProvider } from '@xyflow/react';
+
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const FlowPreview = ({ diagramId }: { diagramId: string }) => {
-  const {
-    data: flowData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['diagramId', diagramId],
-    queryFn: async () => {
-      const { data } = await api.get(`/Diagram/getAllDiagram`);
-      console.log(data);
-      return typeof data.flowData === 'string'
-        ? JSON.parse(data.flowData)
-        : data.flowData;
-    },
-  });
-
-  if (isLoading) return <div>Loading preview...</div>;
-  if (error || !flowData) return <div>Error loading preview</div>;
-
-  return (
-    <div style={{ height: '200px', width: '100%' }}>
-      <ReactFlowProvider>
-        <ReactFlow
-          nodes={flowData.nodes ?? []}
-          edges={flowData.edges ?? []}
-          fitView
-          fitViewOptions={{ padding: 0.2 }}
-          nodesDraggable={false}
-          nodesConnectable={false}
-          elementsSelectable={false}
-          zoomOnScroll={false}
-          panOnScroll={false}
-          preventScrolling={false}
-          defaultViewport={flowData.viewport ?? { x: 0, y: 0, zoom: 1 }}
-        >
-          <Background />
-        </ReactFlow>
-      </ReactFlowProvider>
-    </div>
-  );
-};
-
+import FlowPreview from "@/components/templates/flowPreview";
 
 const page = async () => {
   const allDiagrams = await getAllDiagrams();
+  // const userDiagrams = await getUserDiagrams();
+  // console.log(userDiagrams);
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
       <div className="flex sm:items-center items-start flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
@@ -100,11 +57,11 @@ const page = async () => {
           >
             <div className="absolute top-2 right-3 z-50">
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger asChild className="cursor-pointer outline-none">
                   <button>
                     <Ellipsis
                       size={24}
-                      className=" text-[#4F46E5] cursor-pointer bg-[#4F46E5]/20 rounded-full p-1"
+                      className=" text-[#4F46E5] bg-[#4F46E5]/20 rounded-full p-1"
                     />
                   </button>
                 </DropdownMenuTrigger>
@@ -112,14 +69,14 @@ const page = async () => {
                   align="end"
                   className="bg-white shadow-lg rounded-md p-2"
                 >
-                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                  <DropdownMenuItem>Delete</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer outline-none">Edit</DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer outline-none">Delete</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
 
             <div className="relative h-40 bg-gray-100">
-              <FlowPreview contentJson={diagram.contentJson} />
+              <FlowPreview diagramId={diagram.diagramID} />
             </div>
             <div className="p-4 flex flex-col gap-2">
               <h3 className="font-medium text-lg">{diagram.title}</h3>

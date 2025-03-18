@@ -78,7 +78,7 @@ const Page = () => {
           />
         </div>
       </div>
-      <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:mx-auto pb-6">
+      <div className="px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:max-w-6xl w-full md:mx-auto pb-6">
         {diagrams.length > 0 ? (
           diagrams.map((diagram: TDiagram, index: number) => (
             <div
