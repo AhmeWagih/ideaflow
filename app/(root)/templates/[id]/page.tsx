@@ -1,11 +1,10 @@
 "use client";
 
-import { useUserContext } from "@/app/context/UserContext";
 import { useGetDiagramById } from "@/app/services/hooks/Diagram/useDiagram";
 import CloneMindMap from "@/components/shared/CloneMindMap";
 import DiagramFlow from "@/components/shared/CommunityMindmapFlow";
 import StarDiagramButton from "@/components/shared/StarDiagramButton";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 const DiagramPage = () => {
   // const router = useRouter();
@@ -46,7 +45,6 @@ const DiagramPage = () => {
           </p>
         </div>
         <div className="flex flex-row gap-5">
-          {/* Button to star the diagram */}
           <StarDiagramButton
             diagramID={diagramData.result.diagramID}
             isInFavorite={diagramData.result.isInFavorite || false}

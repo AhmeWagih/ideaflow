@@ -2,6 +2,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getDiagramById,
+  getFavoritesByUser,
   starDiagram,
   unStarDiagram,
 } from "../../api/diagram/diagramApi";
@@ -50,5 +51,16 @@ export const useUnStarDiagram = (id: string) => {
       queryClient.invalidateQueries({ queryKey: ["diagram"] });
       toast("Unstar status updated successfully");
     },
+  });
+};
+
+export const useGetUserFavDiagrams = () => {
+  return useQuery({
+    queryKey: ["diagram"],
+    queryFn: () => getFavoritesByUser(),
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchInterval: false,
+    staleTime: Infinity,
   });
 };
