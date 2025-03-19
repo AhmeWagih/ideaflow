@@ -29,4 +29,8 @@ export const deleteDiagram = async (diagramID: string) => {
   const { data } = await api.delete(`/Diagram/deleteDiagram/${diagramID}`);
   return data;
 };
+export const getFavoritesByUser = async () => {
+  const { data } = await api.get(`/Favorite/getFavoritesByUser`);
+  return data;
+};
 
