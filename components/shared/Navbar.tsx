@@ -1,22 +1,27 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useUserContext } from '@/app/context/UserContext';
+import { useState } from "react";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useUserContext } from "@/app/context/UserContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
+} from "../ui/dropdown-menu";
 
 export function Navbar() {
-  const { logout, user } = useUserContext();
+  const { user } = useUserContext();
   const loggedIn = !!user;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -96,7 +101,10 @@ export function Navbar() {
           {loggedIn ? (
             <DropdownMenu>
               {/* <span className="text-gray-700">{user.email?.slice(0, 5)}</span> */}
-              <DropdownMenuTrigger asChild className="cursor-pointer outline-none">
+              <DropdownMenuTrigger
+                asChild
+                className="cursor-pointer outline-none"
+              >
                 <button className="flex items-center gap-4">
                   <div className="flex items-center justify-center h-8 w-8 rounded-full bg-[#4F46E5]/20 text-[#4F46E5]">
                     {user.email?.slice(0, 2).toUpperCase()}
@@ -104,7 +112,10 @@ export function Navbar() {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-32">
-                <DropdownMenuItem asChild className="cursor-pointer outline-none">
+                <DropdownMenuItem
+                  asChild
+                  className="cursor-pointer outline-none"
+                >
                   <Link
                     href={`/profile/${user?.userID}/diagrams`}
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
@@ -112,7 +123,10 @@ export function Navbar() {
                     Profile
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild className="cursor-pointer outline-none">
+                <DropdownMenuItem
+                  asChild
+                  className="cursor-pointer outline-none"
+                >
                   <button
                     onClick={logout}
                     className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
@@ -128,7 +142,7 @@ export function Navbar() {
                 <Link href="/sign-in">Sign In</Link>
               </Button>
               <Button asChild className="bg-purple-600 hover:bg-purple-700">
-                <Link href="/get-started">Get Started</Link>
+                <Link href="/sign-up">Get Started</Link>
               </Button>
             </>
           )}
@@ -138,7 +152,7 @@ export function Navbar() {
         <button
           className="md:hidden"
           onClick={toggleMenu}
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
           {isMenuOpen ? (
             <X className="h-6 w-6" />
@@ -151,8 +165,8 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          'absolute left-0 right-0 z-50 bg-white px-4 py-5 shadow-lg md:hidden',
-          isMenuOpen ? 'block' : 'hidden'
+          "absolute left-0 right-0 z-[9999999] bg-white px-4 py-5 shadow-lg md:hidden",
+          isMenuOpen ? "block" : "hidden"
         )}
       >
         <nav className="flex flex-col space-y-4">
@@ -188,6 +202,14 @@ export function Navbar() {
             {loggedIn ? (
               <>
                 <span className="text-gray-700">{user.name}</span>
+                <Link
+                  href={`/profile/${user?.userID}/diagrams`}
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                >
+                  <Button variant="outline" onClick={logout} className="w-full">
+                    Profile
+                  </Button>
+                </Link>
                 <Button variant="outline" onClick={logout} className="w-full">
                   Logout
                 </Button>
@@ -200,10 +222,7 @@ export function Navbar() {
                   </Link>
                 </Button>
                 <Button asChild className="w-full">
-                  <Link
-                    href="/get-started"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
+                  <Link href="/sign-up" onClick={() => setIsMenuOpen(false)}>
                     Get Started
                   </Link>
                 </Button>

@@ -33,4 +33,5 @@ export type TDiagram = {
   contentJson?: string;
   numberOfFavorites?: number;
   isClone?: boolean;
+  favouriteID?: string;
 };

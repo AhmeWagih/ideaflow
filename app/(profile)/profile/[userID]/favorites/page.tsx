@@ -1,23 +1,46 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Ellipsis, Globe, Lock } from "lucide-react";
+import { Globe, Lock } from "lucide-react";
 import Link from "next/link";
 import { TDiagram } from "@/constants/types";
 
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import FlowPreview from "@/components/templates/flowPreview";
-import DeleteButton from "@/components/shared/DeleteButton";
 import { useGetUserFavDiagrams } from "@/app/services/hooks/Diagram/useDiagram";
+import UnStarButton from "@/components/shared/UnStarButton";
 
 const UserFav = () => {
-  const { data: favourites } = useGetUserFavDiagrams();
-  console.log(favourites);
+  const {
+    data: favourites,
+    isLoading,
+    isFetching,
+    error,
+  } = useGetUserFavDiagrams();
+
+  console.log(error?.message);
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        Failed to fetch favorites
+      </div>
+    );
+  }
+
+  if (!favourites?.result?.items || favourites.result.items.length === 0) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        No diagram found
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
@@ -50,33 +73,13 @@ const UserFav = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* {favorites.result.items.map((diagram: TDiagram) => (
+        {favourites?.result?.items?.map((diagram: TDiagram) => (
           <div
             key={diagram.diagramID}
             className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow relative"
           >
             <div className="absolute top-2 right-3 z-50">
-              <DropdownMenu>
-                <DropdownMenuTrigger
-                  asChild
-                  className="cursor-pointer outline-none"
-                >
-                  <button>
-                    <Ellipsis
-                      size={24}
-                      className=" text-[#4F46E5] bg-[#4F46E5]/20 rounded-full p-1"
-                    />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="bg-white shadow-lg rounded-md p-2"
-                >
-                  <DropdownMenuItem className="cursor-pointer outline-none">
-                    <DeleteButton diagramID={diagram.diagramID} />
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UnStarButton id={diagram.favouriteID || ""} />
             </div>
 
             <div className="relative h-40 z-10">
@@ -85,12 +88,12 @@ const UserFav = () => {
               )}
             </div>
             <div className="p-4 flex flex-col gap-2">
-              <a
+              <Link
                 href={`/templates/${diagram.diagramID}`}
-                className="font-medium text-lg"
+                className="font-medium text-lg hover:underline"
               >
                 {diagram.title}
-              </a>
+              </Link>
               <div className="flex justify-between text-sm text-gray-500">
                 <div className="flex flex-col gap-2">
                   <span>
@@ -106,7 +109,7 @@ const UserFav = () => {
               </div>
             </div>
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );

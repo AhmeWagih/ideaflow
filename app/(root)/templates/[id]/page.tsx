@@ -47,7 +47,7 @@ const DiagramPage = () => {
         <div className="flex flex-row gap-5">
           <StarDiagramButton
             diagramID={diagramData.result.diagramID}
-            isInFavorite={diagramData.result.isInFavorite || false}
+            isInFavorite={diagramData.result.isInFavorite}
             numberOfFavorites={diagramData.result.numberOfFavorites || 0}
           />
           <CloneMindMap

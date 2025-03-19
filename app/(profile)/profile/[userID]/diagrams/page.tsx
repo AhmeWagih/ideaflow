@@ -1,7 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Ellipsis, Globe, Lock } from "lucide-react";
 import Link from "next/link";
-import { getUserDiagrams } from "@/app/services/api/diagram/diagramApi";
 import { TDiagram } from "@/constants/types";
 
 import {
@@ -12,9 +13,30 @@ import {
 } from "@/components/ui/dropdown-menu";
 import FlowPreview from "@/components/templates/flowPreview";
 import DeleteButton from "@/components/shared/DeleteButton";
+import { useGetUserDiagrams } from "@/app/services/hooks/Diagram/useDiagram";
 
-const page = async ({ params }: { params: { userID: string } }) => {
-  const userDiagrams = await getUserDiagrams(params.userID);
+const UserDiagrams = ({ params }: { params: { userID: string } }) => {
+  const {
+    data: userDiagrams,
+    isLoading,
+    isFetching,
+  } = useGetUserDiagrams({ userID: params.userID });
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (userDiagrams?.result?.items.length === 0) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        No diagram found
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
@@ -109,4 +131,4 @@ const page = async ({ params }: { params: { userID: string } }) => {
   );
 };
 
-export default page;
+export default UserDiagrams;

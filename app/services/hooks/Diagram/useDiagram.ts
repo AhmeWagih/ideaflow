@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getDiagramById,
   getFavoritesByUser,
+  getUserDiagrams,
   starDiagram,
   unStarDiagram,
 } from "../../api/diagram/diagramApi";
@@ -19,18 +19,19 @@ export const useGetDiagramById = ({ id }: { id: string }) => {
   });
 };
 
+export const useGetUserDiagrams = ({ userID }: { userID: string }) => {
+  return useQuery({
+    queryKey: ["userDiagrams", userID],
+    queryFn: () => getUserDiagrams(userID),
+  });
+};
+
 export const useStarDiagram = (diagramID: string) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: () => starDiagram(diagramID),
-    onSuccess: () => {
-      queryClient.setQueryData(["diagram"], (oldData: any) => ({
-        ...oldData,
-        result: {
-          ...oldData.result,
-          isInFavourite: !oldData.result.isInFavourite,
-        },
-      }));
+    onSuccess: (data) => {
+      console.log(data);
       queryClient.invalidateQueries({ queryKey: ["diagram"] });
       toast("Star status updated successfully");
     },
@@ -41,13 +42,6 @@ export const useUnStarDiagram = (id: string) => {
   return useMutation({
     mutationFn: () => unStarDiagram(id),
     onSuccess: () => {
-      queryClient.setQueryData(["diagram"], (oldData: any) => ({
-        ...oldData,
-        result: {
-          ...oldData.result,
-          isInFavourite: !oldData.result.isInFavourite,
-        },
-      }));
       queryClient.invalidateQueries({ queryKey: ["diagram"] });
       toast("Unstar status updated successfully");
     },
