@@ -1,8 +1,6 @@
 "use client";
 
-import { useUserContext } from "@/app/context/UserContext";
 import MindMapGenerator from "@/components/shared/MindMapGenerator";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 const GeneratePage = () => {

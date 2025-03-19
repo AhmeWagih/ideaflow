@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import "../../globals.css";
-import { Navbar } from "@/components/shared/Navbar";
 import QueryProvider from "@/components/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "@/app/context/UserContext";
-
-
 
 export const metadata: Metadata = {
   title: "Idea Flow",
@@ -21,9 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <UserProvider>
-          <QueryProvider>
-            {children}
-          </QueryProvider>
+          <QueryProvider>{children}</QueryProvider>
         </UserProvider>
         <Toaster />
       </body>
