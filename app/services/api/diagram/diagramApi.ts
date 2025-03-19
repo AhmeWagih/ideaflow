@@ -30,3 +30,12 @@ export const deleteDiagram = async (diagramID: string) => {
   return data;
 };
 
+export const starDiagram = async (diagramID: string) => {
+  const { data } = await api.post("/Favorite/addFavorite", { diagramID });
+  return data;
+};
+
+export const unStarDiagram = async (id: string) => {
+  const { data } = await api.post(`/Favorite/deleteFavorite/${id}`);
+  return data;
+};

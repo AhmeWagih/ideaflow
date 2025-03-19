@@ -61,7 +61,7 @@ const ShareMindMap = () => {
       });
   };
 
-  const { mutate: saveMindmap } = useSaveMindMap({
+  const { mutate: saveMindmap, isPending } = useSaveMindMap({
     title,
     contentjson: conentjson,
     isPublic,
@@ -120,7 +120,11 @@ const ShareMindMap = () => {
             <PublicCheckbox isPublic={isPublic} onToggle={setIsPublic} />
           </div>
           <DialogFooter>
-            <Button onClick={handleSave} className="cursor-pointer">
+            <Button
+              onClick={handleSave}
+              disabled={isPending}
+              className="cursor-pointer"
+            >
               <Save className="mr-2 h-4 w-4" />
               Save Mindmap
             </Button>

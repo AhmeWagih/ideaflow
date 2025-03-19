@@ -87,11 +87,13 @@ const Page = () => {
               className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shado w-full"
             >
               <div className="relative h-40 bg-gray-100">
-                {diagram.contentJson && <FlowPreview contentJson={diagram.contentJson} />}
+                {diagram.contentJson && (
+                  <FlowPreview contentJson={diagram.contentJson} />
+                )}
               </div>
               <div className="p-4 flex flex-col gap-2">
                 <Link
-                  className=""
+                  className="underline"
                   href={`/templates/${diagram.diagramID}`}
                 >
                   <h3 className="font-medium text-lg">{diagram.title}</h3>

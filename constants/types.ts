@@ -18,6 +18,8 @@ export type TSave_Mindmap = {
   title: string;
   contentjson: string;
   isPublic: boolean;
+  baseDiagramID?: string;
+  isClone?: boolean;
 };
 
 export type TDiagram = {
@@ -26,7 +28,9 @@ export type TDiagram = {
   isPublic: boolean;
   diagramID: string;
   fullName: string;
-  isInFavourite?: boolean;
+  isInFavorite?: boolean;
   description?: string;
   contentJson?: string;
+  numberOfFavorites?: number;
+  isClone?: boolean;
 };
