@@ -1,21 +1,20 @@
-import { Button } from '@/components/ui/button';
-import { Ellipsis, Globe, Lock } from 'lucide-react';
-import Link from 'next/link';
-import { getUserDiagrams } from '@/app/services/api/diagram/diagramApi';
-import { TDiagram } from '@/constants/types';
+import { Button } from "@/components/ui/button";
+import { Ellipsis, Globe, Lock } from "lucide-react";
+import Link from "next/link";
+import { getUserDiagrams } from "@/app/services/api/diagram/diagramApi";
+import { TDiagram } from "@/constants/types";
 
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import FlowPreview from '@/components/templates/flowPreview';
-import DeleteButton from '@/components/shared/DeleteButton';
+} from "@/components/ui/dropdown-menu";
+import FlowPreview from "@/components/templates/flowPreview";
+import DeleteButton from "@/components/shared/DeleteButton";
 
 const page = async ({ params }: { params: { userID: string } }) => {
   const userDiagrams = await getUserDiagrams(params.userID);
-  console.log(userDiagrams);
 
   return (
     <div className="container mx-auto p-6 flex flex-col gap-6">
@@ -83,18 +82,23 @@ const page = async ({ params }: { params: { userID: string } }) => {
               )}
             </div>
             <div className="p-4 flex flex-col gap-2">
-              <a href={`/templates/${diagram.diagramID}`} className="font-medium text-lg">{diagram.title}</a>
+              <Link
+                href={`/templates/${diagram.diagramID}`}
+                className="font-medium text-lg hover:underline"
+              >
+                {diagram.title}
+              </Link>
               <div className="flex justify-between text-sm text-gray-500">
                 <div className="flex flex-col gap-2">
                   <span>
-                    Last edited{' '}
+                    Last edited{" "}
                     {new Date(diagram.updatedAt).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex items-end flex-col md:flex-row gap-2">
                   {diagram.isPublic === true && <Globe className="h-4 w-4" />}
                   {diagram.isPublic === false && <Lock className="h-4 w-4" />}
-                  <span>{diagram.isPublic ? 'Public' : 'Private'}</span>
+                  <span>{diagram.isPublic ? "Public" : "Private"}</span>
                 </div>
               </div>
             </div>

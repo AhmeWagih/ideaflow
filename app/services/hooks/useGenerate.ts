@@ -16,7 +16,6 @@ export const useGenerate = ({
   return useMutation({
     mutationFn: () => generateResponse({ prompt, modelOption }),
     onSuccess: (data) => {
-      console.log(data);
       const encodedData = encodeURIComponent(JSON.stringify(data.result));
       router.push(`/mindmap?data=${encodedData}`);
     },

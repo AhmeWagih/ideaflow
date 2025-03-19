@@ -179,7 +179,6 @@ function MindMapScreen() {
     }
   }, [dataParam, handleDelete, setEdges, setNodes]);
 
-  console.log(nodes);
 
   return (
     <div style={{ height: "100vh", position: "relative" }}>

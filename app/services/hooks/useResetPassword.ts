@@ -15,10 +15,9 @@ export const useResetPassword = ({
   const router = useRouter();
   return useMutation({
     mutationFn: () => resetPassword({ password, confirmPassword, email }),
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast("great, your password has been reset!");
       router.push("/sign-in");
-      console.log(data);
     },
   });
 };
